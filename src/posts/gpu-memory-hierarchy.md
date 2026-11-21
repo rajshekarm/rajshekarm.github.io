@@ -56,7 +56,7 @@ int main() {
 The `cudaMalloc()` function allocates device memory,
 while `cudaFree()` releases it.
   
-  
+
 ## A reproducible experiment to try
 
 1. Write a simple vector operation in CUDA.
