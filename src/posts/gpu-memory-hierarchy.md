@@ -3,10 +3,8 @@ title: Understanding the GPU Memory Hierarchy
 date: 2026-10-18
 summary: A practical mental model for global memory, shared memory, caches, and why data movement often dominates kernel performance.
 tags: GPU, Architecture, Performance
-# Optional companion video: replace the blank value with your YouTube link when ready.
-youtube:
+youtube: https://www.youtube.com/watch?v=HQejUtJtBlg
 ---
-
 > **Demo article:** This is educational sample content, not a record of an experiment you performed. Replace it with your own findings.
 
 ## Why memory matters
@@ -33,6 +31,32 @@ int i = blockIdx.x * blockDim.x + threadIdx.x;
 if (i < n) output[i] = input[i] * scale;
 ```
 
+
+## CUDA Memory Allocation
+
+The following example allocates memory on the GPU.
+
+```cpp
+#include <cuda_runtime.h>
+#include <iostream>
+
+int main() {
+    float* d_data = nullptr;
+    size_t size = 1024 * sizeof(float);
+
+    cudaMalloc((void**)&d_data, size);
+
+    std::cout << "GPU memory allocated!" << std::endl;
+
+    cudaFree(d_data);
+    return 0;
+}
+```
+
+The `cudaMalloc()` function allocates device memory,
+while `cudaFree()` releases it.
+  
+  
 ## A reproducible experiment to try
 
 1. Write a simple vector operation in CUDA.

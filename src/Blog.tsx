@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { ArrowLeft, ArrowRight, BookOpen, CalendarDays, Clock3, Search, Tag, Youtube, Play } from 'lucide-react';
+import CodeBlock from './CodeBlock';
+import { isValidElement } from 'react';
+
 
 interface Post { slug: string; title: string; date: string; summary: string; tags: string[]; content: string; minutes: number; videoUrl?: string; }
 const sources = import.meta.glob('./posts/*.md', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
@@ -46,7 +49,50 @@ export default function Blog({ slug }: { slug?: string }) {
   const post = slug ? posts.find(p => p.slug === slug) : undefined;
   useEffect(() => { window.scrollTo({top:0,behavior:'smooth'}); }, [slug]);
   if (slug && !post) return <section className="blog-shell"><h2>Article not found</h2><p>That article doesn't exist yet.</p><a href="#blog">← Back to writing</a></section>;
-  if (post) return <article className="blog-shell article"><a className="back-link" href="#blog"><ArrowLeft size={16}/> All articles</a><div className="article-kicker">ENGINEERING NOTES / {post.tags[0]?.toUpperCase()}</div><h1>{post.title}</h1><p className="article-deck">{post.summary}</p><div className="post-meta"><span><CalendarDays size={15}/>{displayDate(post.date)}</span><span><Clock3 size={15}/>{post.minutes} min read</span></div><div className="article-tags">{post.tags.map(tag => <span key={tag}>{tag}</span>)}</div><VideoFeature key={post.slug} url={post.videoUrl}/><div className="markdown-body"><ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown></div><div className="article-end"><strong>Thanks for reading.</strong><p>These are demonstration articles. Replace the examples with your own experiments, code, and measured results before publishing.</p><a href="#blog">Explore more articles <ArrowRight size={16}/></a></div></article>;
+  if (post) 
+    return <article className="blog-shell article">
+      <a className="back-link" href="#blog"><ArrowLeft size={16}/> All articles</a>
+      <div className="article-kicker">ENGINEERING NOTES / {post.tags[0]?.toUpperCase()}</div><h1>{post.title}</h1><p className="article-deck">{post.summary}</p><div className="post-meta"><span><CalendarDays size={15}/>{displayDate(post.date)}</span><span><Clock3 size={15}/>{post.minutes} min read</span></div>
+      
+      <div className="article-tags">{post.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
+      
+      <VideoFeature key={post.slug} url={post.videoUrl}/><div className="markdown-body">
+        
+
+<ReactMarkdown
+  remarkPlugins={[remarkGfm]}
+  components={{
+    pre({ children }) {
+      if (!isValidElement<{
+        className?: string;
+        children?: React.ReactNode;
+      }>(children)) {
+        return <pre>{children}</pre>;
+      }
+
+      const className = children.props.className ?? '';
+      const language =
+        /language-([\w+-]+)/.exec(className)?.[1] ?? 'text';
+
+      const code = String(children.props.children ?? '')
+        .replace(/\n$/, '');
+
+      return <CodeBlock code={code} language={language} />;
+    },
+  }}
+>
+  {post.content}
+</ReactMarkdown>
+        
+        
+        </div>
+        
+        
+        <div className="article-end"><strong>Thanks for reading.</strong><p>These are demonstration articles. Replace the examples with your own experiments, code, and measured results before publishing.</p>
+        
+        <a href="#blog">Explore more articles <ArrowRight size={16}/></a></div>
+        
+        </article>;
   const filtered = posts.filter(p => (category === 'All' || p.tags.includes(category)) && (p.title + p.summary + p.tags.join(' ')).toLowerCase().includes(query.toLowerCase()));
   return <section className="blog-shell"><div className="blog-eyebrow"><BookOpen size={16}/> THE ENGINEERING JOURNAL</div><h1>Technical Notes Experiments <span>& deep dives.</span></h1><p className="blog-description">Exploring the systems behind modern AI—from memory hierarchies and GPU kernels to distributed computing. Clear explanations, real tradeoffs, and reproducible experiments.</p><div className="blog-controls"><label className="blog-search"><Search size={17}/><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search articles..." aria-label="Search articles"/></label><div className="category-list" aria-label="Filter by topic">{categories.map(c => <button key={c} type="button" className={category === c ? 'selected' : ''} onClick={() => setCategory(c)}>{c}</button>)}</div></div><div className="post-list">{filtered.map((p, i) => <a href={'#blog/' + p.slug} className="post-card" key={p.slug}><div className="post-card-main"><div className="post-meta"><span><CalendarDays size={14}/>{displayDate(p.date)}</span><span><Clock3 size={14}/>{p.minutes} min read</span>{youtubeId(p.videoUrl) && <span className="video-indicator"><Youtube size={14}/> Video</span>}</div><h2>{p.title}</h2><p>{p.summary}</p><div className="article-tags">{p.tags.map(t => <span key={t}><Tag size={12}/>{t}</span>)}</div></div><div className="post-card-side"><span className="post-number">0{i+1}</span><ArrowRight size={21}/></div></a>)}{filtered.length === 0 && <p className="empty-results">No articles match your search.</p>}</div><p className="blog-disclaimer">Sample posts for layout demonstration. Publish only work you can substantiate.</p></section>;
 }

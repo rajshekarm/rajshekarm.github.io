@@ -156,3 +156,25 @@
 .blog-controls {
   padding-top: 16px;
 }
+
+
+/* Syntax-highlighted code blocks */
+
+.highlighted-code {
+  margin: 22px 0;
+  border-radius: 9px;
+  overflow: hidden;
+}
+
+.highlighted-code pre {
+  margin: 0;
+  padding: 20px;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.highlighted-code code {
+  font-family: inherit;
+}
