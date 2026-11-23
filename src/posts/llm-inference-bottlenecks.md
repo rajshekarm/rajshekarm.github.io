@@ -5,7 +5,7 @@ summary: A systems-oriented introduction to prefill, token decoding, memory pres
 tags: AI Systems, GPU, Performance
 ---
 
-> **Demo article:** This is a conceptual overview. Add actual measurements and references when adapting it to your portfolio.
+This note provides a systems perspective on the main phases and bottlenecks in LLM inference.
 
 ## Two phases, different bottlenecks
 

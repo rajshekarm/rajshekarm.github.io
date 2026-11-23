@@ -5,7 +5,7 @@ summary: How to reason about cache lines, associativity, replacement policy, and
 tags: Architecture, C++, Performance
 ---
 
-> **Demo article:** The following is a suggested learning project, not a claim that this simulator has been built.
+This note presents a practical model for reasoning about cache behavior and locality.
 
 ## Start with a question
 

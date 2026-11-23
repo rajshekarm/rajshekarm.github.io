@@ -5,7 +5,7 @@ summary: A practical mental model for global memory, shared memory, caches, and 
 tags: GPU, Architecture, Performance
 youtube: https://www.youtube.com/watch?v=HQejUtJtBlg
 ---
-> **Demo article:** This is educational sample content, not a record of an experiment you performed. Replace it with your own findings.
+This note explains the GPU memory hierarchy and the performance tradeoffs that influence kernel design.
 
 ## Why memory matters
 
@@ -25,8 +25,8 @@ A GPU can execute enormous amounts of arithmetic, but its performance depends on
 Arithmetic intensity is the number of operations performed per byte transferred from memory. For many workloads, improving reuse can matter more than adding arithmetic units.
 
 ```cpp
-// Conceptual example: contiguous memory access
-// Real performance depends on GPU architecture and launch configuration.
+// Contiguous memory access pattern.
+// Performance depends on GPU architecture and launch configuration.
 int i = blockIdx.x * blockDim.x + threadIdx.x;
 if (i < n) output[i] = input[i] * scale;
 ```
