@@ -178,3 +178,6 @@
 .highlighted-code code {
   font-family: inherit;
 }
+
+/* Experience and education */
+.experience-list{display:flex;flex-direction:column;gap:26px}.experience-item{border-left:3px solid #d8dee4;padding:0 0 4px 19px}.experience-heading{display:flex;justify-content:space-between;gap:20px}.experience-item h4{font-size:15px;line-height:1.45;margin:0;color:#24292f}.experience-company{font-size:13px;color:#0969da;font-weight:600;margin:5px 0 0}.experience-meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;color:#6e7781;font-size:11px;white-space:nowrap}.experience-summary{font-size:13px;color:#57606a;line-height:1.65;margin:12px 0 8px}.experience-item ul{padding-left:20px;margin:9px 0 0;color:#424a53;font-size:13px;line-height:1.7}.experience-item li{margin:5px 0}.education-real{margin-top:40px}.education-real+.section{margin-top:40px}#education{display:none}.repo-details{display:block;color:#6e7781;font-size:11px;line-height:1.5;margin-top:10px}@media(max-width:650px){.experience-heading{display:block}.experience-meta{align-items:flex-start;margin-top:7px;gap:3px}.experience-item{padding-left:14px}}
