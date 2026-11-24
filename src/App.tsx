@@ -57,11 +57,11 @@ export default function App() {
     <header className="topbar"><div className="top-inner"><a className="wordmark" href="#top"><span className="wordmark-icon">&lt;/&gt;</span> {person.handle}<span className="muted">.github.io</span></a><nav aria-label="Main navigation">{nav.map(item => <a href={item.href} key={item.href}>{item.label}</a>)}</nav></div></header>
     {blogRoute ? <Blog slug={hash.startsWith('#blog/') ? decodeURIComponent(hash.slice(6)) : undefined}/> : <div className="layout">
       <aside className="sidebar">
-<img
+ <div className="avatar-frame"><img
   src={`${import.meta.env.BASE_URL}images/profile.png`}
   alt="Rajashekar Mudigonda"
   className="avatar"
-/>        <h1>{person.name}</h1><p className="handle">@{person.handle}</p>
+ /></div>        <h1>{person.name}</h1><p className="handle">@{person.handle}</p>
         <p className="bio">Researching efficient AI systems across hardware, software, and agentic infrastructure.</p>
         <a className="sidebar-button" href={`mailto:${person.email}`}>Get in touch</a><div className="sidebar-links"><span><MapPin size={16}/>{person.location}</span><a href={person.github} target="_blank" rel="noreferrer"><Github size={16}/> GitHub</a><a href={person.linkedin} target="_blank" rel="noreferrer"><Linkedin size={16}/> LinkedIn</a><a href={`mailto:${person.email}`}><Mail size={16}/>{person.email}</a>{person.resume && <a href={person.resume}><FileText size={16}/> Resume</a>}</div><div className="sidebar-note">B.E./B.Tech · Electronics & Communication Engineering<br/>M.S. · Computer Science</div></aside>
       <main className="main">
