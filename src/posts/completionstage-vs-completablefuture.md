@@ -47,6 +47,10 @@ This reduces coupling between application components. The interface defines the 
 
 Now consider the actual implementation. The market-data service retrieves the latest price from a repository.
 
+![ExecutorService work queue, thread pool, and completion flow](/images/execution-service.jpg)
+
+*An ExecutorService accepts submitted tasks, schedules them through a worker pool, and produces completed results for downstream stages.*
+
 ```java
 public class MarketDataServiceImpl
         implements MarketDataService {
